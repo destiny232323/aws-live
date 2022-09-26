@@ -25,6 +25,9 @@ table = 'employee'
 def home():
     return render_template('AddEmp.html')
 
+@app.route("/salary", methods=['GET', 'POST'])
+def salary():
+    return render_template('salary.html')
 
 @app.route("/about", methods=['POST'])
 def about():
@@ -85,6 +88,4 @@ def AddEmp():
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
 
-@app.route("/salary", methods=['POST'])
-def salary():
-    return render_template('salary.html')
+
