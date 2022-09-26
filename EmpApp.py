@@ -27,29 +27,6 @@ def home():
 
 @app.route("/salary", methods=['GET', 'POST'])
 def salary():
-    emp_id = request.form['emp_id']
-    
-    
-    cursor = db_conn.cursor()
-    
-    selectSql = "Select position From employee Where emp_id = %s"
-    id = (emp_id)
-    cursor.execute(selectSql, id)
-    db_conn.commit()
-    result = cursor.fetchall()
-    cursor.close()
-
-    cursor = db_conn.cursor()
-    insertSql = "Insert INTO employee (salary) VALUES (%s)"
-    if result == 'Senior':
-        salary = 6000
-    else:
-        salary = 3000
-
-    cursor.execute(insertSql, (salary))
-    db_conn.commit()
-
-    cursor.close()
     return render_template('salary.html')
 
 @app.route("/examine", methods=['GET', 'POST'])
@@ -68,16 +45,36 @@ def view():
 def search():
     emp_id = request.form['emp1_id']
     cursor = db_conn.cursor()
+    
+    selectSql = "Select position From employee Where emp_id = %s"
+    id = (emp_id)
+    cursor.execute(selectSql, id)
+    db_conn.commit()
+    result1 = cursor.fetchall()
+    cursor.close()
+
+    if result1 == 'Senior':
+        salary = 6000
+    else:
+        salary = 3000
+
+    cursor = db_conn.cursor()
+    insertSql = "Insert INTO employee (salary) VALUES (%s)"
+
+    cursor.execute(insertSql, (salary))
+    db_conn.commit()
+    
+    cursor = db_conn.cursor()
     selectSql = "Select salary From employee Where emp_id = %s"
     id = (emp_id)
     cursor.execute(selectSql, id)
     db_conn.commit()
-    result = cursor.fetchall()
+    result2 = cursor.fetchall()
 
     cursor.close()
 
     
-    return render_template('examine.html', result)
+    return render_template('examine.html', result2)
 
 @app.route("/about", methods=['POST'])
 def about():
