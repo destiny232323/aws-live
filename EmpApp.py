@@ -74,7 +74,7 @@ def search():
     cursor.close()
 
     
-    return render_template('examine.html', result2)
+    return render_template('examine.html', result2 = result2)
 
 @app.route("/about", methods=['POST'])
 def about():
