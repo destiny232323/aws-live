@@ -41,7 +41,7 @@ def update():
 def view():
     return render_template('view.html')
 
-@app.route("/search", methods=['GET', 'POST'])
+@app.route("/search", methods=['POST'])
 def search():
     emp_id = request.form['emp1_id']
     cursor = db_conn.cursor()
