@@ -48,15 +48,19 @@ def view():
     cursor.execute(string2)
     result2 = cursor.fetchall()
 
-    string3 = "Select salary from employee"
+    string3 = "Select salary_name from employee"
     cursor.execute(string3)
     result3 = cursor.fetchall()
+
+    string4 = "Select Sum(salary) as sum_salary from employee"
+    cursor.execute(string4)
+    result4 = cursor.fetchone()
 
 
     db_conn.commit()
     cursor.close()
 
-    return render_template('view.html', result1 = result1, result2 = result2, result3 = result3)
+    return render_template('view.html', result1 = result1, result2 = result2, result3 = result3, result4 = result4)
 
 @app.route("/search2", methods=['POST'])
 def search2():
