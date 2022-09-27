@@ -55,10 +55,10 @@ def search2():
     result1 = cursor.fetchone()
 
     total = int(result1[0]) + int(overtime * 10) - int(penalty)
-    final = int((epf * total) / 100)
+    #final = int((epf * total) / 100)
 
     updateSql = "Update employee set salary = %s Where emp_id = %s"
-    money = (final)
+    money = (total)
     id = (emp_id)
     cursor.execute(updateSql, money, id)
     finalSalary = cursor.fetchone()
