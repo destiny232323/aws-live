@@ -64,7 +64,7 @@ def view():
     db_conn.commit()
     cursor.close()
 
-    return render_template('view.html', result1 = result1, result2 = result2, result3 = result3, result4 = result4)
+    return render_template('view.html', result1 = result1[0], result2 = result2[0], result3 = result3[0], result4 = result4[0])
 
 @app.route("/search2", methods=['POST'])
 def search2():
