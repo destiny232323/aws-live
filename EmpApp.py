@@ -41,6 +41,26 @@ def update():
 def view():
     return render_template('view.html')
 
+@app.route("/search2", methods=['POST'])
+def search2():
+    emp_id = request.form['emp2_id']
+    cursor = db_conn.cursor()
+    
+    selectSql = "Select position From employee Where emp_id = %s"
+    id = (emp_id)
+    cursor.execute(selectSql, id)
+    result1 = cursor.fetchone()
+    db_conn.commit()
+    cursor.close()
+
+    if result1 == 'Senior':
+        salary = 6000
+    else:
+        salary = 3000
+        
+    cursor.close()
+    return render_template('update.html', result1 = result1)
+
 @app.route("/search", methods=['POST'])
 def search():
     emp_id = request.form['emp1_id']
@@ -52,9 +72,7 @@ def search():
     result2 = cursor.fetchone()
     db_conn.commit()
 
-    cursor.close()
-
-    
+    cursor.close()  
     return render_template('examine.html', result2 = result2)
 
 @app.route("/about", methods=['POST'])
@@ -126,7 +144,7 @@ def AddEmp():
         cursor.close()
 
     print("all modification done...")
-    return render_template('salary.html', name=result1)
+    return render_template('salary.html', name = result1)
 
 
 if __name__ == '__main__':
