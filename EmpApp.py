@@ -39,7 +39,12 @@ def update():
 
 @app.route("/view", methods=['GET', 'POST'])
 def view():
-    return render_template('view.html')
+    cursor = db_conn.cursor()
+    string = "Select emp_id, salary from employee"
+    cursor.execute(string)
+    result = cursor.fetchall()
+
+    return render_template('view.html', result = result)
 
 @app.route("/search2", methods=['POST'])
 def search2():
