@@ -62,7 +62,7 @@ def search2():
     final = ((100 - float(epf)) * float(total)) / 100
 
     updateSql = "Update employee set salary = %s Where emp_id = %s"
-    money = (total)
+    money = (final)
     id = (emp_id)
     cursor.execute(updateSql, (money, id))
 
