@@ -48,7 +48,7 @@ def view():
     cursor.execute(string2)
     result2 = cursor.fetchall()
 
-    string3 = "Select salary_name from employee"
+    string3 = "Select salary from employee"
     cursor.execute(string3)
     result3 = cursor.fetchall()
 
