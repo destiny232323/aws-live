@@ -98,7 +98,7 @@ def search2():
     db_conn.commit()
     cursor.close()
 
-    return render_template('update.html', result1 = result1, finalSalary = finalSalary)
+    return render_template('update.html', result = result1[0], finalSalary = finalSalary[0])
 
 @app.route("/search", methods=['POST'])
 def search():
