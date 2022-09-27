@@ -54,6 +54,10 @@ def search2():
     cursor.execute(selectSql, id)
     result1 = cursor.fetchone()
 
+    str(overtime)
+    str(penalty)
+    str(epf)
+    
     total = int(result1[0]) + int(overtime * 10) - int(penalty)
     #final = int((epf * total) / 100)
 
