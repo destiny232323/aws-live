@@ -44,13 +44,10 @@ def view():
     cursor.execute(string)
     result = cursor.fetchall()
 
-    for x in result:
-        y = x + '\t'
-
     db_conn.commit()
     cursor.close()
 
-    return render_template('view.html', result = y)
+    return render_template('view.html', result = print(result, '\n'))
 
 @app.route("/search2", methods=['POST'])
 def search2():
