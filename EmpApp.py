@@ -40,17 +40,23 @@ def update():
 @app.route("/view", methods=['GET', 'POST'])
 def view():
     cursor = db_conn.cursor()
-    string = "Select first_name, last_name, salary from employee"
+    string = "Select first_name from employee"
     cursor.execute(string)
-    result = cursor.fetchall()
+    result1 = cursor.fetchall()
 
-    for x in result:
-        print(x)
+    string2 = "Select last_name from employee"
+    cursor.execute(string2)
+    result2 = cursor.fetchall()
+
+    string3 = "Select salary_name from employee"
+    cursor.execute(string3)
+    result3 = cursor.fetchall()
+
 
     db_conn.commit()
     cursor.close()
 
-    return render_template('view.html', result = x)
+    return render_template('view.html', result1 = result1, result2 = result2, result3 = result3)
 
 @app.route("/search2", methods=['POST'])
 def search2():
