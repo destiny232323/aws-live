@@ -64,7 +64,24 @@ def about():
 
 @app.route("/addemp", methods=['POST'])
 def AddEmp():
-    emp_id = request.form['emp_id']    
+    emp_id = request.form['emp_id']
+    cursor = db_conn.cursor()
+    
+    selectSql = "Select position From employee Where emp_id = %s"
+    id = (emp_id)
+    cursor.execute(selectSql, id)
+    db_conn.commit()
+    result1 = cursor.fetchall()
+    cursor.close()
+
+    if result1 == 'Senior':
+        salary = 6000
+    else:
+        salary = 3000
+        
+    print(result1)
+    cursor.close()
+    
     first_name = request.form['first_name']
     last_name = request.form['last_name']
     pri_skill = request.form['pri_skill']
@@ -108,21 +125,6 @@ def AddEmp():
 
     finally:
         cursor.close()
-    
-   
-    cursor = db_conn.cursor()
-    selectSql = "Select position From employee Where emp_id = %s"
-    id = (emp_id)
-    cursor.execute(selectSql, id)
-    db_conn.commit()
-    result1 = cursor.fetchall()
-    cursor.close()
-
-    if result1 == 'Senior':
-        salary = 6000
-    else:
-        salary = 3000
-    cursor.close()
 
     print("all modification done...")
     return render_template('AddEmpOutput.html', name=emp_name)
