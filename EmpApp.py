@@ -53,10 +53,7 @@ def search2():
     id = (emp_id)
     cursor.execute(selectSql, id)
     result1 = cursor.fetchone()
-    db_conn.commit()
-    cursor.close()
-    
-    cursor = db_conn.cursor()
+
     total = int(result1[0]) + (int(overtime * 10)) - int(penalty)
     float(final) = float(((epf * total) / 100)
 
