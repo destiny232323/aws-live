@@ -58,7 +58,6 @@ def search2():
     else:
         salary = 3000
         
-    cursor.close()
     return render_template('update.html', result1 = salary)
 
 @app.route("/search", methods=['POST'])
@@ -82,23 +81,7 @@ def about():
 
 @app.route("/addemp", methods=['POST'])
 def AddEmp():
-    emp_id = request.form['emp_id']
-    cursor = db_conn.cursor()
-    
-    selectSql = "Select position From employee Where emp_id = %s"
-    id = (emp_id)
-    cursor.execute(selectSql, id)
-    result1 = cursor.fetchone()
-    db_conn.commit()
-    cursor.close()
-
-    if len(result1) > 6:
-        salary = 6000
-    else:
-        salary = 3000
-        
-    cursor.close()
-    
+    emp_id = request.form['emp_id']   
     first_name = request.form['first_name']
     last_name = request.form['last_name']
     pri_skill = request.form['pri_skill']
@@ -106,21 +89,24 @@ def AddEmp():
     position = request.form['position']
     emp_image_file = request.files['emp_image_file']
 
-    insert_sql = "INSERT INTO employee (emp_id, first_name, last_name, pri_skill, location, position, salary) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    insert_sql = "INSERT INTO employee (emp_id, first_name, last_name, pri_skill, location, position) VALUES (%s, %s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
 
     if emp_image_file.filename == "":
         return "Please select a file"
 
     try:
-        employeeSalary = salary
-        cursor.execute(insert_sql, (emp_id, first_name, last_name, pri_skill, location, position, employeeSalary))
+        cursor.execute(insert_sql, (emp_id, first_name, last_name, pri_skill, location, position))
         db_conn.commit()     
         emp_name = "" + first_name + " " + last_name
         # Uplaod image file in S3 #
         emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
         s3 = boto3.resource('s3')
 
+        
+        
+        
+        
         try:
             print("Data inserted in MySQL RDS... uploading image to S3...")
             s3.Bucket(custombucket).put_object(Key=emp_image_file_name_in_s3, Body=emp_image_file)
@@ -142,7 +128,30 @@ def AddEmp():
 
     finally:
         cursor.close()
+     
+    
+    cursor = db_conn.cursor()
+    selectSql = "Select position From employee Where emp_id = %s"
+    id = (emp_id)
+    cursor.execute(selectSql, id)
+    result1 = cursor.fetchone()
+    db_conn.commit()
+    cursor.close()
 
+    if result1 == 'Senior':
+        salary = 6000
+    else:
+        salary = 3000
+       
+    
+    cursor = db_conn.cursor()    
+    InsertSql = "Update employee Set salary = %s"
+    employeeSalary = (salary)
+    cursor.execute(InsertSql, employeeSalary)
+    db_conn.commit()
+    cursor.close()
+        
+        
     print("all modification done...")
     return render_template('salary.html', name = result1)
 
