@@ -66,7 +66,7 @@ def search2():
     id = (emp_id)
     cursor.execute(updateSql, (money, id))
 
-    SelectSql2 = "Select salary From employee Where emp_id = %s"
+    selectSql2 = "Select salary From employee Where emp_id = %s"
     id = (emp_id)
     cursor.execute(selectSql2, id)
     finalSalary = cursor.fetchone()
