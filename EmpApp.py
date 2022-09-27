@@ -92,7 +92,7 @@ def AddEmp():
     db_conn.commit()
     cursor.close()
 
-    if result1 == 'S':
+    if len(result1) > 6:
         salary = 6000
     else:
         salary = 3000
