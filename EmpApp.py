@@ -126,7 +126,7 @@ def AddEmp():
         cursor.close()
 
     print("all modification done...")
-    return render_template('AddEmpOutput.html', name=result1)
+    return render_template('salary.html', name=result1)
 
 
 if __name__ == '__main__':
