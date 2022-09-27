@@ -79,7 +79,6 @@ def AddEmp():
     else:
         salary = 3000
         
-    print(result1)
     cursor.close()
     
     first_name = request.form['first_name']
@@ -127,7 +126,7 @@ def AddEmp():
         cursor.close()
 
     print("all modification done...")
-    return render_template('AddEmpOutput.html', name=emp_name)
+    return render_template('AddEmpOutput.html', name=result1)
 
 
 if __name__ == '__main__':
