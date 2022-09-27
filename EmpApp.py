@@ -65,11 +65,11 @@ def search2():
     money = (total)
     id = (emp_id)
     cursor.execute(updateSql, (money, id))
-    finalSalary = cursor.fetchone()
+    #finalSalary = cursor.fetchone()
     db_conn.commit()
     cursor.close()
 
-    return render_template('update.html', result1 = result1, finalSalary = finalSalary)
+    return render_template('update.html', result1 = result1, finalSalary = result1[0])
 
 @app.route("/search", methods=['POST'])
 def search():
