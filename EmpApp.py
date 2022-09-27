@@ -89,15 +89,20 @@ def AddEmp():
     position = request.form['position']
     emp_image_file = request.files['emp_image_file']
 
-    insert_sql = "INSERT INTO employee (emp_id, first_name, last_name, pri_skill, location, position) VALUES (%s, %s, %s, %s, %s, %s)"
+    insert_sql = "INSERT INTO employee (emp_id, first_name, last_name, pri_skill, location, position, salary) VALUES (%s, %s, %s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
 
     if emp_image_file.filename == "":
         return "Please select a file"
 
-
-    cursor.execute(insert_sql, (emp_id, first_name, last_name, pri_skill, location, position))
-    db_conn.commit()     
+    if position == 'Senior':
+        salary = 6000
+    else:
+        salary = 3000
+    cursor.execute(insert_sql, (emp_id, first_name, last_name, pri_skill, location, position, salary))
+    db_conn.commit()   
+    
+        
     emp_name = "" + first_name + " " + last_name
     # Uplaod image file in S3 #
     emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
@@ -125,30 +130,7 @@ def AddEmp():
 
 
     cursor.close()
-     
-    
-    cursor = db_conn.cursor()
-    selectSql = "Select position From employee Where emp_id = %s"
-    id = (emp_id)
-    cursor.execute(selectSql, id)
-    result1 = cursor.fetchone()
-    db_conn.commit()
-    cursor.close()
-
-    if result1 == 'Senior':
-        salary = 6000
-    else:
-        salary = 3000
-       
-    
-    cursor = db_conn.cursor()    
-    InsertSql = "Insert Into employee (salary) Values (%s)"
-    employeeSalary = (salary)
-    cursor.execute(InsertSql, employeeSalary)
-    db_conn.commit()
-    cursor.close()
-        
-        
+                
     print("all modification done...")
     return render_template('salary.html', name = result1)
 
