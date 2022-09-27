@@ -92,7 +92,7 @@ def AddEmp():
     db_conn.commit()
     cursor.close()
 
-    if result1 == 'Senior':
+    if result1 == "'Senior'":
         salary = 6000
     else:
         salary = 3000
