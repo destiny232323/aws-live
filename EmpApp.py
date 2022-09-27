@@ -57,7 +57,8 @@ def search2():
     total = int(result1[0]) + (int(overtime * 10)) - int(penalty)
     float(final) = float(((epf * total) / 100)
 
-    updateSql = "Update employee set salary = %s Where emp_id = %s"
+    #updateSql = "Update employee set salary = %s Where emp_id = %s"
+    selectSql2 = "Select salary From employee Where emp_id = %s"
     money = (final)
     id = (emp_id)
     cursor.execute(updateSql, money, id)
