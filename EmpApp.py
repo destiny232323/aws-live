@@ -112,7 +112,7 @@ def search():
     db_conn.commit()
 
     cursor.close()  
-    return render_template('examine.html', result2 = result2)
+    return render_template('examine.html', result = result2[0])
 
 @app.route("/about", methods=['POST'])
 def about():
