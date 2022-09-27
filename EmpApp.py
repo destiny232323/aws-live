@@ -59,7 +59,7 @@ def search2():
         salary = 3000
         
     cursor.close()
-    return render_template('update.html', result1 = result1)
+    return render_template('update.html', result1 = salary)
 
 @app.route("/search", methods=['POST'])
 def search():
