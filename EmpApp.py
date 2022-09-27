@@ -60,7 +60,7 @@ def search2():
     updateSql = "Update employee set salary = %s Where emp_id = %s"
     money = (total)
     id = (emp_id)
-    cursor.execute(updateSql, money, id)
+    cursor.execute(updateSql, (money, id))
     finalSalary = cursor.fetchone()
     db_conn.commit()
     cursor.close()
