@@ -52,7 +52,7 @@ def view():
     cursor.execute(string3)
     result3 = cursor.fetchall()
 
-    string4 = "Select Sum(salary) as sum_salary from employee"
+    string4 = "Select Sum(salary) from employee"
     cursor.execute(string4)
     result4 = cursor.fetchone()
 
