@@ -142,7 +142,7 @@ def AddEmp():
        
     
     cursor = db_conn.cursor()    
-    InsertSql = "Update employee Set salary = %s"
+    InsertSql = "Insert Into employee (salary) Values (%s)"
     employeeSalary = (salary)
     cursor.execute(InsertSql, employeeSalary)
     db_conn.commit()
