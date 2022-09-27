@@ -56,7 +56,7 @@ def search2():
     db_conn.commit()
     cursor.close()
 
-    total = int(result1) + (overtime * 10) - penalty
+    total = int(result1[0]) + (overtime * 10) - penalty
     final = (epf * total) / 100
 
     cursor = db_conn.cursor()
