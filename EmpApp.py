@@ -58,18 +58,22 @@ def search2():
     str(penalty)
     str(epf)
     
-    total = int(result1[0]) + int(overtime * 10) - int(penalty)
-    #final = int((epf * total) / 100)
+    total = int(result1[0]) + (int(overtime) * 10) - int(penalty)
+    final = (float(epf) * float(total)) / 100
 
     updateSql = "Update employee set salary = %s Where emp_id = %s"
     money = (total)
     id = (emp_id)
     cursor.execute(updateSql, (money, id))
-    #finalSalary = cursor.fetchone()
+
+    SelectSql2 = "Select salary From employee Where emp_id = %s"
+    id = (emp_id)
+    cursor.execute(selectSql2, id)
+    finalSalary = cursor.fetchone()
     db_conn.commit()
     cursor.close()
 
-    return render_template('update.html', result1 = result1, finalSalary = result1[0])
+    return render_template('update.html', result1 = result1, finalSalary = finalSalary)
 
 @app.route("/search", methods=['POST'])
 def search():
