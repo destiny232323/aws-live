@@ -44,25 +44,6 @@ def view():
 @app.route("/search", methods=['POST'])
 def search():
     emp_id = request.form['emp1_id']
-    cursor = db_conn.cursor()
-    
-    selectSql = "Select position From employee Where emp_id = %s"
-    id = (emp_id)
-    cursor.execute(selectSql, id)
-    db_conn.commit()
-    result1 = cursor.fetchall()
-    cursor.close()
-
-    if result1 == 'Senior':
-        salary = 6000
-    else:
-        salary = 3000
-
-    cursor = db_conn.cursor()
-    insertSql = "Insert INTO employee (salary) VALUES (%s)"
-
-    cursor.execute(insertSql, (salary))
-    db_conn.commit()
     
     cursor = db_conn.cursor()
     selectSql = "Select salary From employee Where emp_id = %s"
@@ -84,6 +65,21 @@ def about():
 @app.route("/addemp", methods=['POST'])
 def AddEmp():
     emp_id = request.form['emp_id']
+    cursor = db_conn.cursor()
+    
+    selectSql = "Select position From employee Where emp_id = %s"
+    id = (emp_id)
+    cursor.execute(selectSql, id)
+    db_conn.commit()
+    result1 = cursor.fetchall()
+    cursor.close()
+
+    if result1 == 'Senior':
+        salary = 6000
+    else:
+        salary = 3000
+    cursor.close()
+    
     first_name = request.form['first_name']
     last_name = request.form['last_name']
     pri_skill = request.form['pri_skill']
@@ -91,16 +87,16 @@ def AddEmp():
     position = request.form['position']
     emp_image_file = request.files['emp_image_file']
 
-    insert_sql = "INSERT INTO employee (emp_id, first_name, last_name, pri_skill, location, position) VALUES (%s, %s, %s, %s, %s, %s)"
+    insert_sql = "INSERT INTO employee (emp_id, first_name, last_name, pri_skill, location, position, salary) VALUES (%s, %s, %s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
 
     if emp_image_file.filename == "":
         return "Please select a file"
 
     try:
-
-        cursor.execute(insert_sql, (emp_id, first_name, last_name, pri_skill, location, position))
-        db_conn.commit()
+        employeeSalary = salary
+        cursor.execute(insert_sql, (emp_id, first_name, last_name, pri_skill, location, position, employeeSalary))
+        db_conn.commit()     
         emp_name = "" + first_name + " " + last_name
         # Uplaod image file in S3 #
         emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
