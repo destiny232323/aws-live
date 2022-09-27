@@ -49,8 +49,8 @@ def search():
     selectSql = "Select salary From employee Where emp_id = %s"
     id = (emp_id)
     cursor.execute(selectSql, id)
+    result2 = cursor.fetchone()
     db_conn.commit()
-    result2 = cursor.fetchall()
 
     cursor.close()
 
@@ -70,8 +70,8 @@ def AddEmp():
     selectSql = "Select position From employee Where emp_id = %s"
     id = (emp_id)
     cursor.execute(selectSql, id)
+    result1 = cursor.fetchone()
     db_conn.commit()
-    result1 = cursor.fetchall()
     cursor.close()
 
     if result1 == 'Senior':
