@@ -44,21 +44,31 @@ def view():
 @app.route("/search2", methods=['POST'])
 def search2():
     emp_id = request.form['emp2_id']
+    overtime = request.form['ot']
+    penalty = request.form['penalty']
+    epf = request.form['epf']
     cursor = db_conn.cursor()
     
-    selectSql = "Select position From employee Where emp_id = %s"
+    selectSql = "Select salary From employee Where emp_id = %s"
     id = (emp_id)
     cursor.execute(selectSql, id)
     result1 = cursor.fetchone()
     db_conn.commit()
     cursor.close()
 
-    if result1 == 'Senior':
-        salary = 6000
-    else:
-        salary = 3000
-        
-    return render_template('update.html', result1 = salary)
+    total = result1 + (overtime * 10) - penalty
+    final = (epf * total) / 100
+
+    cursor = db_conn.cursor()
+    UpdateSql = "Update employee set salary = %s Where emp_id = %s"
+    money = (final)
+    id = (emp_id)
+    cursor.execute(UpdateSql, money, id)
+    finalSalary = cursor.fetchone()
+    db_conn.commit()
+    cursor.close()
+
+    return render_template('update.html', result1 = result1, finalSalary = finalSalary)
 
 @app.route("/search", methods=['POST'])
 def search():
